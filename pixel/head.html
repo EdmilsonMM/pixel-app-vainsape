@@ -1,0 +1,36 @@
+<script>
+(function () {
+  function swapTag(selector, newTag) {
+    document.querySelectorAll(selector).forEach((el) => {
+      if (el.tagName.toLowerCase() === newTag) return;
+      const newEl = document.createElement(newTag);
+      newEl.innerHTML = el.innerHTML;
+      [...el.attributes].forEach((attr) => newEl.setAttribute(attr.name, attr.value));
+      el.replaceWith(newEl);
+    });
+  }
+
+  function run() {
+    swapTag('[class*="vtex-wordpress-integration-2-x-teaserHeader"]', 'span');
+    swapTag('[class*="vtex-wordpress-integration-2-x-teaserTitle--card"]', 'h2');
+    swapTag('[class*="vtex-wordpress-integration-2-x-teaserTitle--blogRecientes"]', 'p');
+    swapTag('[class*="vtex-wordpress-integration-2-x-latestPostsBlockFlexItem--blogRecientes"]', 'li');
+    swapTag('[class*="vtex-wordpress-integration-2-x-latestPostsBlockFlex--blogRecientes"]', 'ul');
+    swapTag('.vtex-store-locator-0-x-noResults h3', 'div');
+    swapTag('[class*="vtex-search-result-3-x-filterMessage"]', 'div');
+    swapTag('[class*="vtex-wordpress-integration-2-x-latestPostsBlockFlexItem--relacionadas-blogPost"]', 'li');
+    swapTag('[class*="vtex-wordpress-integration-2-x-latestPostsBlockFlex--relacionadas-blogPost"]', 'ul');
+  }
+
+  function init() {
+    run();
+    new MutationObserver(run).observe(document.body, { childList: true, subtree: true });
+  }
+
+  if (document.body) {
+    init();
+  } else {
+    document.addEventListener('DOMContentLoaded', init);
+  }
+})();
+</script>
